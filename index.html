@@ -1,0 +1,167 @@
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<title>Física</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="phaser.min.js"></script>
+		<script src="jquery-1.10.2.min.js"></script>
+	</head>
+	<body>
+		<style>
+			section {
+			    margin: 0 0 50px;
+			}
+			.title, .form, canvas {
+			    text-align: center;
+			    margin: 0 auto;
+			}
+			.form input {
+			    display: block;
+			    text-align: center;
+			    margin: 0 auto;
+			}
+			a {
+			    background-color: #999;
+			    color: #FFF;
+			    padding: 8px 15px;
+			    border-radius: 10px;
+			}
+			.btns {
+			    margin-top: 25px;
+			    text-align: center;
+			}
+			canvas {
+			    max-width: 100%;
+			}
+		</style>
+		<section class="container">
+			<div class="row">
+				<div class="col-sm-12 title">
+					<h1>Física</h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-3 form">
+					<label for="angulo_1">Angulo 1:</label>
+					<input type="text" id="angulo_1" placeholder="Digite o primeiro angulo..." value="130">
+				</div>
+				<div class="col-sm-3 form">
+					<label for="angulo_2">Angulo 2:</label>
+					<input type="text" id="angulo_2" placeholder="Digite o segundo angulo..." value="35">
+				</div>
+				<div class="col-sm-3 form">
+					<label for="massa">Massa:</label>
+					<input type="text" id="massa" placeholder="Digite a massa em kg..." value="15.3">
+				</div>
+				<div class="col-sm-3 btns">
+					<a href="#" id="calc">Calcular</a>
+					<a href="#" id="reset">Reset</a>
+				</div>
+			</div>
+		</section>
+	</body>
+	<script>
+		var game = new Phaser.Game(800, 400, Phaser.CANVAS, 'desafio-fisica', { preload: preload, create: create });
+
+		function preload() {
+
+		    game.load.image('arrow', 'sprites/32x32.png');
+
+		}
+
+		var arrow;
+
+		function create() {
+
+		    game.stage.backgroundColor = '#999';
+
+		    var labelStyle = { font: "16px courier", fill: "#eee", align: "center" };
+
+		    var circle = new Phaser.Circle(405, 300, 250);
+		    var labelCircle = new Phaser.Circle(398, 300, 400);
+
+		    var graphics = game.add.graphics(0, 0);
+
+		    graphics.lineStyle(2, 0x00ff00, 1);
+
+		    graphics.drawCircle(circle.x, circle.y);
+
+		        $('#calc').on('click', function calc(){
+
+		            var ang1 = $("input#angulo_1").val();
+		            var ang2 = $("input#angulo_2").val();
+		            var massaCalc = $("input#massa").val();
+		            var massa = massaCalc*10;
+		            var rad1 = Phaser.Math.degToRad(ang1);
+		            var rad2 = Phaser.Math.degToRad(ang2);
+		            var f1 = (massa * Math.sin(rad2)*(-1))/((-1)*Math.sin(rad1+rad2));
+		            var f2 = (massa * Math.sin(rad1))/Math.sin(rad1+rad2);
+
+		            for (var a = 180; a < 370; a += 30)
+		            {
+		                graphics.moveTo(400, 300);
+
+		                var p = circle.circumferencePoint(a, true);
+
+
+		                var lp = labelCircle.circumferencePoint(a, true);
+
+		                var na = a;
+
+		                if (a > 180)
+		                {
+		                    na -= 360;
+		                }
+
+		                //var rads = String(Phaser.Math.degToRad(na)).substr(0, 5);
+		                var info = na + "°\n" ;//+ rads;
+
+
+		                var label = game.add.text(lp.x, lp.y, info.replace('-',''), labelStyle);
+		            }
+
+		                var label3 = game.add.text(380, 330, 'Massa', labelStyle);
+
+		                var g1 = circle.circumferencePoint(-ang1, true);
+
+		                var gp1 = labelCircle.circumferencePoint(-ang1, true);
+
+		                var ng1 = -ang1;
+
+		                var label1 = game.add.text(gp1.x, gp1.y-35, 'F1', labelStyle);
+
+		                graphics.lineTo(gp1.x,gp1.y);
+
+		                graphics.moveTo(400, 300);
+
+		                var g2 = circle.circumferencePoint(-ang2, true);
+
+		                var gp2 = labelCircle.circumferencePoint(-ang2, true);
+
+		                var ng2 = -ang2;
+
+		                var label2 = game.add.text(gp2.x, gp2.y-35, 'F2', labelStyle);
+
+		                graphics.lineTo(gp2.x,gp2.y);
+
+
+		            arrow = game.add.sprite(game.world.centerX, game.world.centerY, 'arrow');
+		            arrow.anchor.set(0.5, -3.1);
+		            arrow.tint = "#eee";
+
+
+		            game.add.text(24, 32,'Desafio Fisica', labelStyle);
+		            game.add.text( 24, 64, 'F1: '+ f1 + ' N', labelStyle);
+		            game.add.text(24, 96,'F2: '+ f2 + ' N', labelStyle);
+		            game.add.text(24, 128,'Massa: '+massa+' N', labelStyle);
+
+		        });
+		}
+
+		        $("#reset").on('click', function(){
+		            location.reload();
+		        })
+
+	</script>
+</html>
