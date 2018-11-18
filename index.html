@@ -44,15 +44,15 @@
 			<div class="row">
 				<div class="col-sm-3 form">
 					<label for="angulo_1">Angulo 1:</label>
-					<input type="text" id="angulo_1" placeholder="Digite o primeiro angulo...">
+					<input type="text" id="angulo_1" placeholder="Digite o primeiro angulo..." >
 				</div>
 				<div class="col-sm-3 form">
 					<label for="angulo_2">Angulo 2:</label>
-					<input type="text" id="angulo_2" placeholder="Digite o segundo angulo...">
+					<input type="text" id="angulo_2" placeholder="Digite o segundo angulo..." >
 				</div>
 				<div class="col-sm-3 form">
 					<label for="massa">Massa:</label>
-					<input type="text" id="massa" placeholder="Digite a massa em kg...">
+					<input type="text" id="massa" placeholder="Digite a massa em kg..." >
 				</div>
 				<div class="col-sm-3 btns">
 					<a href="#" id="calc">Calcular</a>
@@ -135,11 +135,11 @@
 
 		                graphics.moveTo(400, 300);
 
-		                var g2 = circle.circumferencePoint(-ang2, true);
+		                var g2 = circle.circumferencePoint(-180-(-ang2), true);
 
-		                var gp2 = labelCircle.circumferencePoint(-ang2, true);
+		                var gp2 = labelCircle.circumferencePoint(-180-(-ang2), true);
 
-		                var ng2 = -ang2;
+		                var ng2 = -180-(-ang2);
 
 		                var label2 = game.add.text(gp2.x, gp2.y-35, 'F2', labelStyle);
 
@@ -151,9 +151,9 @@
 		            arrow.tint = "#eee";
 
 
-		            game.add.text(24, 32,'Desafio Fisica', labelStyle);
-		            game.add.text( 24, 64, 'F1: '+ f1 + ' N', labelStyle);
-		            game.add.text(24, 96,'F2: '+ f2 + ' N', labelStyle);
+		            game.add.text(24, 32,'Desafio Física', labelStyle);
+		            game.add.text( 24, 64, 'F1: '+ f1.toFixed(2) + ' N', labelStyle);
+		            game.add.text(24, 96,'F2: '+ f2.toFixed(2) + ' N', labelStyle);
 		            game.add.text(24, 128,'Massa: '+massa+' N', labelStyle);
 
 		        });
